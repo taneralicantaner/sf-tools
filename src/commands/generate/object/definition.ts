@@ -50,7 +50,9 @@ export default class GenerateObjectDefinition extends SfCommand<GenerateObjectDe
       }
     }
 
-    XLSX.writeFileXLSX(workbook, 'ObjectDefinition_' + new Date().toISOString().replace(/[:.]/g, '-') + '.xlsx');
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0];
+    XLSX.writeFileXLSX(workbook, 'ObjectDefinition_' + formattedDate + '.xlsx');
 
     return { result: true };
   }

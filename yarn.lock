@@ -1348,6 +1348,7 @@
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/@oclif/core/-/core-4.4.0.tgz#82fb972822270c8e585587bd1c8a01ffbac588e2"
   integrity sha512-wH5g3SLmbRutnr7UzQBSozRFEAZ7U9YGB/wFuBRr0ZghTgv5DE+KQaf6ZtU7iFb9pvkvoVRnT5XheNAtbjRDaQ==
+>>>>>>> 704c280787c8df43d39fc7f7ef4d2551f5218249
   dependencies:
     ansi-escapes "^4.3.2"
     ansis "^3.17.0"
@@ -1469,34 +1470,17 @@
     strip-ansi "6.0.1"
     ts-retry-promise "^0.8.1"
 
+<<<<<<< HEAD
+"@salesforce/core@^8", "@salesforce/core@^8.10.0", "@salesforce/core@^8.12.0", "@salesforce/core@^8.8.0", "@salesforce/core@^8.8.5":
+  version "8.17.0"
+  resolved "https://registry.npmjs.org/@salesforce/core/-/core-8.17.0.tgz"
+  integrity sha512-2pZfBtwA1oX5IuxS8/gVnrFXzPAJpf6ZA5bfImN1dWGbWlwrfocXzXTNRFdQ2gP0FG4o+PFSlc6d4g8Vwz25IA==
+=======
 "@salesforce/core@^8", "@salesforce/core@^8.10.0", "@salesforce/core@^8.15.0", "@salesforce/core@^8.8.0":
   version "8.15.0"
   resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-8.15.0.tgz#95d337a7a219c2d305117c9f5594617784a8642f"
   integrity sha512-vTobdBQ7JRlApUDezUAVlC7O7VUk1e+9AM8+TZIVnj2Glub7E5vtwTJRDT48MJ/wWjdhH+9MFfUi2GPHymHmrQ==
-  dependencies:
-    "@jsforce/jsforce-node" "^3.8.2"
-    "@salesforce/kit" "^3.2.2"
-    "@salesforce/schemas" "^1.9.0"
-    "@salesforce/ts-types" "^2.0.10"
-    ajv "^8.17.1"
-    change-case "^4.1.2"
-    fast-levenshtein "^3.0.0"
-    faye "^1.4.0"
-    form-data "^4.0.0"
-    js2xmlparser "^4.0.1"
-    jsonwebtoken "9.0.2"
-    jszip "3.10.1"
-    pino "^9.7.0"
-    pino-abstract-transport "^1.2.0"
-    pino-pretty "^11.3.0"
-    proper-lockfile "^4.1.2"
-    semver "^7.6.3"
-    ts-retry-promise "^0.8.1"
-
-"@salesforce/core@^8.12.0":
-  version "8.17.0"
-  resolved "https://registry.npmjs.org/@salesforce/core/-/core-8.17.0.tgz"
-  integrity sha512-2pZfBtwA1oX5IuxS8/gVnrFXzPAJpf6ZA5bfImN1dWGbWlwrfocXzXTNRFdQ2gP0FG4o+PFSlc6d4g8Vwz25IA==
+>>>>>>> 704c280787c8df43d39fc7f7ef4d2551f5218249
   dependencies:
     "@jsforce/jsforce-node" "^3.8.2"
     "@salesforce/kit" "^3.2.2"
@@ -3868,12 +3852,12 @@ eslint-plugin-jsdoc@^46.10.1:
     semver "^7.5.4"
     spdx-expression-parse "^4.0.0"
 
-eslint-plugin-sf-plugin@^1.20.21:
-  version "1.20.21"
-  resolved "https://registry.npmjs.org/eslint-plugin-sf-plugin/-/eslint-plugin-sf-plugin-1.20.21.tgz"
-  integrity sha512-jHfKga2kLLA3XjCxO8dc27yGbhFiR5gfsnESmSuBSKZGTMpbrWUNZutRdIn0nNL2ZXlLV0TRQaaiz7nEEw43tg==
+eslint-plugin-sf-plugin@^1.20.27:
+  version "1.20.27"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-sf-plugin/-/eslint-plugin-sf-plugin-1.20.27.tgz#77e1b8edddc3fa03060d1ab965cba2ce69e8da43"
+  integrity sha512-OjadAKTrk0lyQ8ss/cba3zZ3vsngfI1xNINdOrPbBPQ6Nz5SgfqJXXLeDPVfy8BZbJKJK+r4Xf4xn+1p509i3g==
   dependencies:
-    "@salesforce/core" "^8.10.0"
+    "@salesforce/core" "^8.17.0"
     "@typescript-eslint/utils" "^7.18.0"
 
 eslint-plugin-unicorn@^50.0.1:
@@ -4144,11 +4128,6 @@ faye@^1.4.0:
     safe-buffer "*"
     tough-cookie "*"
     tunnel-agent "*"
-
-fdir@^6.4.3:
-  version "6.4.3"
-  resolved "https://registry.npmjs.org/fdir/-/fdir-6.4.3.tgz"
-  integrity sha512-PMXmW2y1hDDfTSRc9gaXIuCCRpuoz3Kaz8cUelp3smouvfT632ozg2vrT6lJsHKKOF59YLbOGfAWGUcKEfRMQw==
 
 fdir@^6.4.4:
   version "6.4.6"
@@ -7359,20 +7338,12 @@ tiny-jsonc@^1.0.2:
   resolved "https://registry.npmjs.org/tiny-jsonc/-/tiny-jsonc-1.0.2.tgz"
   integrity sha512-f5QDAfLq6zIVSyCZQZhhyl0QS6MvAyTxgz4X4x3+EoCktNWEYJ6PeoEA97fyb98njpBNNi88ybpD7m+BDFXaCw==
 
-tinyglobby@^0.2.14:
+tinyglobby@^0.2.14, tinyglobby@^0.2.9:
   version "0.2.14"
   resolved "https://registry.yarnpkg.com/tinyglobby/-/tinyglobby-0.2.14.tgz#5280b0cf3f972b050e74ae88406c0a6a58f4079d"
   integrity sha512-tX5e7OM1HnYr2+a2C/4V0htOcSQcoSTH9KgJnVvNm5zm/cyEWKJ7j7YutsH9CxMdtOkkLFy2AHrMci9IM8IPZQ==
   dependencies:
     fdir "^6.4.4"
-    picomatch "^4.0.2"
-
-tinyglobby@^0.2.9:
-  version "0.2.12"
-  resolved "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.12.tgz"
-  integrity sha512-qkf4trmKSIiMTs/E63cxH+ojC2unam7rJ0WrauAzpT3ECNTxGRMlaXxVbfxMUC/w0LaYk6jQ4y/nGR9uBO3tww==
-  dependencies:
-    fdir "^6.4.3"
     picomatch "^4.0.2"
 
 tldts-core@^6.1.86:

@@ -6,7 +6,9 @@
     "@oclif/core": "^4",
     "@salesforce/core": "^8",
     "@salesforce/sf-plugins-core": "^12",
-    "husky": "^9.1.7"
+    "@salesforce/source-deploy-retrieve": "^12.21.0",
+    "husky": "^9.1.7",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@oclif/plugin-command-snapshot": "^5.2.38",
@@ -47,6 +49,14 @@
     "topics": {
       "hello": {
         "description": "Commands to say hello."
+      },
+      "generate": {
+        "description": "description for generate",
+        "subtopics": {
+          "object": {
+            "description": "description for generate.object"
+          }
+        }
       }
     },
     "flexibleTaxonomy": true

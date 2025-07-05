@@ -47,3 +47,8 @@ node_modules
 # os specific files
 .DS_Store
 .idea
+
+
+ObjectDefinition_*
+
+yarn.lock

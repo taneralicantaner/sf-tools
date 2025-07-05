@@ -17,3 +17,7 @@ More information about a flag. Don't repeat the summary.
 # examples
 
 - <%= config.bin %> <%= command.id %>
+
+# flags.target-objects.summary
+
+Summary for target-objects.

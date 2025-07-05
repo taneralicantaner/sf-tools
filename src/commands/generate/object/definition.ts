@@ -19,6 +19,9 @@ export default class GenerateObjectDefinition extends SfCommand<GenerateObjectDe
 
   public static readonly flags = {
     'target-org': Flags.requiredOrg(),
+    'target-objects': Flags.string({
+      summary: messages.getMessage('flags.target-objects.summary'),
+    }),
   };
 
   public async run(): Promise<GenerateObjectDefinitionResult> {
@@ -28,9 +31,14 @@ export default class GenerateObjectDefinition extends SfCommand<GenerateObjectDe
 
     this.log(`Connected to ${flags['target-org'].getUsername()} (${orgId}) with API version ${connection.version}`);
 
-    const metadata = await connection.metadata.list([{ type: 'CustomObject', folder: null }]);
+    let objectFullnames: string[] = [];
+    if (!flags['target-objects']) {
+      const metadata = await connection.metadata.list([{ type: 'CustomObject', folder: null }]);
+      objectFullnames = metadata.map((sobject) => sobject.fullName);
+    } else {
+      objectFullnames = flags['target-objects'].split(',');
+    }
 
-    const objectFullnames = metadata.map((sobject) => sobject.fullName);
     objectFullnames.sort();
 
     const workbook = XLSX.utils.book_new();
@@ -46,12 +54,13 @@ export default class GenerateObjectDefinition extends SfCommand<GenerateObjectDe
           XLSX.utils.book_append_sheet(workbook, worksheet, objectFullname);
         }
       } catch (error) {
+        this.log(`Cannot retrieved the following object: ${objectFullname}`);
         continue;
       }
     }
 
     const today = new Date();
-    const formattedDate = today.toISOString().split('T')[0];
+    const formattedDate = today.toISOString().split('T')[0].replace(/-/g, '');
     XLSX.writeFileXLSX(workbook, 'ObjectDefinition_' + formattedDate + '.xlsx');
 
     return { result: true };

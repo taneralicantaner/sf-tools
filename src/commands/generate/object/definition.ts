@@ -68,7 +68,7 @@ export default class GenerateObjectDefinition extends SfCommand<GenerateObjectDe
     for (const objectFullname of objectFullnames) {
       this.log(`Processing object: ${objectFullname} (${index++}/${objectFullnames.length})`);
       const indexLine = {
-        '#': index - 1,
+        '#': '',
         オブジェクト名: objectFullname,
       };
       indexLines.push(indexLine);
@@ -115,6 +115,7 @@ export default class GenerateObjectDefinition extends SfCommand<GenerateObjectDe
     const indexSheet = XLSX.utils.json_to_sheet(indexLines);
 
     for (let i = 0; i < indexLines.length; i++) {
+      indexSheet['A' + (i + 2)] = { v: i + 1, t: 'n' };
       indexSheet['B' + (i + 2)].l = { Target: '#' + indexSheet['B' + (i + 2)].v + '!A1' };
     }
 

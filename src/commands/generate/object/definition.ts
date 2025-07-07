@@ -4,7 +4,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { SfCommand, Flags } from '@salesforce/sf-plugins-core';
 import { Messages } from '@salesforce/core';
-// import { Field } from 'jsforce/describe-result.js';
 import XLSX from 'xlsx';
 import { Field } from '@jsforce/jsforce-node';
 
@@ -28,6 +27,8 @@ type CustomField = {
   デフォルト値: string;
   数式: string;
   ヘルプデスク: string;
+  名前項目: boolean;
+  制限付き選択リスト: boolean; // Optional field for restricted picklist
 };
 
 export default class GenerateObjectDefinition extends SfCommand<GenerateObjectDefinitionResult> {
@@ -60,19 +61,17 @@ export default class GenerateObjectDefinition extends SfCommand<GenerateObjectDe
     objectFullnames.sort();
 
     const workbook = XLSX.utils.book_new();
-    const indexSheetData = [
-      {
-        '#': '',
-        オブジェクト: '',
-        リンク: '',
-      },
-    ];
-    const indexSheet = XLSX.utils.json_to_sheet(indexSheetData);
-    XLSX.utils.book_append_sheet(workbook, indexSheet, 'Index');
 
-    let index = 1;
+    const indexLines = [];
+
+    let index: number = 1;
     for (const objectFullname of objectFullnames) {
       this.log(`Processing object: ${objectFullname} (${index++}/${objectFullnames.length})`);
+      const indexLine = {
+        '#': index - 1,
+        オブジェクト名: objectFullname,
+      };
+      indexLines.push(indexLine);
 
       try {
         const decribeObject = await connection.describe(objectFullname);
@@ -99,6 +98,8 @@ export default class GenerateObjectDefinition extends SfCommand<GenerateObjectDe
             デフォルト値: '',
             数式: '',
             ヘルプデスク: '',
+            名前項目: '',
+            制限付き選択リスト: '',
           };
           fields.push(customField);
         }
@@ -110,6 +111,19 @@ export default class GenerateObjectDefinition extends SfCommand<GenerateObjectDe
         continue;
       }
     }
+
+    const indexSheet = XLSX.utils.json_to_sheet(indexLines);
+
+    for (let i = 0; i < indexLines.length; i++) {
+      indexSheet['B' + (i + 2)].l = { Target: '#' + indexSheet['B' + (i + 2)].v + '!A1' };
+    }
+
+    XLSX.utils.book_append_sheet(workbook, indexSheet, 'Index');
+    const sheetNames = workbook.SheetNames;
+
+    const sheetToMove = sheetNames.splice(sheetNames.length - 1, 1)[0];
+    sheetNames.unshift(sheetToMove);
+    workbook.SheetNames = sheetNames;
 
     const today = new Date();
     const formattedDate = today.toISOString().split('T')[0].replace(/-/g, '');
@@ -124,7 +138,7 @@ function convertMetadata(metadata: Field, index: number): CustomField {
     '#': index, // Placeholder, will be set later
     ラベル: metadata.label || '',
     API名: metadata.name || '',
-    タイプ: metadata.type || '',
+    タイプ: metadata.calculatedFormula ? 'formula (' + metadata.type + ')' : metadata.type || '',
     文字数: metadata.length
       ? metadata.length.toString()
       : metadata.type === 'double'
@@ -133,17 +147,18 @@ function convertMetadata(metadata: Field, index: number): CustomField {
     必須: metadata.nillable === false,
     一意: metadata.unique === true,
     参照先オブジェクト: Array.isArray(metadata.referenceTo) ? metadata.referenceTo.join(', ') : '',
-    選択リスト値: '',
+    選択リスト値:
+      metadata.type === 'picklist' && metadata.picklistValues
+        ? metadata.picklistValues
+          ? metadata.picklistValues.map((value) => value.label + ' (' + value.value + ')').join(', ')
+          : ''
+        : '',
     デフォルト値: metadata.defaultValue?.toString() ?? '',
     数式: metadata.calculatedFormula ?? '',
     ヘルプデスク: metadata.inlineHelpText ?? '',
+    名前項目: metadata.nameField ? true : false,
+    制限付き選択リスト: metadata.restrictedPicklist ? true : false, // Optional field for restricted picklist
   };
-
-  if (metadata.type === 'picklist' && metadata.picklistValues) {
-    customField.選択リスト値 = metadata.picklistValues
-      ? metadata.picklistValues.map((value) => value.label + ' (' + value.value + ')').join(', ')
-      : '';
-  }
 
   return customField;
 }

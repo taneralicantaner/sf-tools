@@ -72,7 +72,7 @@
     "lint": "wireit",
     "postpack": "sf-clean --ignore-signing-artifacts",
     "prepack": "sf-prepack",
-    "prepare": "npm install",
+    "prepare": "sf-install",
     "test": "wireit",
     "test:nuts": "nyc mocha \"**/*.nut.ts\" --slow 4500 --timeout 600000 --parallel",
     "test:only": "wireit",
@@ -83,10 +83,18 @@
   },
   "wireit": {
     "build": {
-      "dependencies": [
-        "compile",
-        "lint"
-      ]
+      "command": "tsc -p . --incremental",
+      "files": [
+        "**/tsconfig.json",
+        "messages/**",
+        "src/**/*.json",
+        "src/**/*.ts"
+      ],
+      "output": [
+        "lib/**",
+        "*.tsbuildinfo"
+      ],
+      "clean": "if-file-deleted"
     },
     "compile": {
       "command": "tsc -p . --pretty --incremental",

@@ -67,12 +67,13 @@
     "clean-all": "sf-clean all",
     "compile": "wireit",
     "docs": "sf-docs",
+    "fix-license": "eslint src test --fix --rule \"header/header: [2]\"",
     "format": "wireit",
     "link-check": "wireit",
     "lint": "wireit",
     "postpack": "sf-clean --ignore-signing-artifacts",
     "prepack": "sf-prepack",
-    "prepare": "wireit",
+    "prepare": "sf-install",
     "test": "wireit",
     "test:nuts": "nyc mocha \"**/*.nut.ts\" --slow 4500 --timeout 600000 --parallel",
     "test:only": "wireit",
@@ -83,18 +84,10 @@
   },
   "wireit": {
     "build": {
-      "command": "tsc -p . --incremental",
-      "files": [
-        "**/tsconfig.json",
-        "messages/**",
-        "src/**/*.json",
-        "src/**/*.ts"
-      ],
-      "output": [
-        "lib/**",
-        "*.tsbuildinfo"
-      ],
-      "clean": "if-file-deleted"
+      "dependencies": [
+        "compile",
+        "lint"
+      ]
     },
     "prepare": {
       "command": "tsc -p . --incremental",
